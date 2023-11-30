@@ -4,7 +4,6 @@ import Data.Maybe
 
 -- part 1
 
-
 extractString :: String -> [Int] -> [Int]
 extractString xs ys = foldr extractStringHelper ys xs
 
