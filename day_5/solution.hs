@@ -63,9 +63,9 @@ getNextRange r (m:ms) = completed ++ (concatMap (`getNextRange` ms) incomplete)
     where
         (min, max) = extractRange m
         unfiltered = [getSmallerThan r min, getGreaterThan r max, getInBetween r m]
-        filtered = filter (\(Range _ a, b) -> a > 0) unfiltered
-        completed = map (\(a, _) -> a) (filter (\(_, b) -> b) filtered)
-        incomplete = map (\(a, _) -> a) (filter (\(_, b) -> (not b)) filtered)
+        filtered = filter (\(Range _ a, _) -> a > 0) unfiltered
+        completed = map fst (filter snd filtered)
+        incomplete = map fst (filter (not . snd) filtered)
 
 extractRange :: Map -> (Int, Int)
 extractRange (Map _ src r) = (src, src + r - 1)
